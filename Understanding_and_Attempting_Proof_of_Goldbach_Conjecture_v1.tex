@@ -1,0 +1,177 @@
+\documentclass{article}
+\usepackage{amsmath, amssymb}
+\usepackage{amsthm}
+\usepackage{geometry}
+\usepackage{hyperref}  % last or near last
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{xeCJK}            % 中文支持
+\usepackage{fontspec}         % 字体设置（可选）
+%\setCJKmainfont{SimSun} 
+
+% TODO https://chatgpt.com/share/683cac93-8df8-8013-8a70-21806203db84
+% In fact we need prove prime count under n - sqrt n, is greater than prime count under sqrt n. Did I ask the same question?
+
+
+% delta can go less equal to sqrt n, so all its factors covered primes smaller and equal to sqrt n.
+
+
+\geometry{margin=1in}
+\title{Understanding and Attempting Proof of Goldbach Conjecture}
+\author{Zhikai Wang zhikai.wang@alumni.ucla.edu}
+\date{June 2025}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+In this article, we attempt to prove or provide a better understanding of this well known problem. Most computer science and mathematics graduates will have sufficient background to understand the content. We also ignore very edge cases and focus on the way of thinking. We also do not attempt to prove obvious facts.
+\section{Definitions}
+\subsection*{N-multiple}
+An integer has $n$ repeatable prime integer factors. $n \in \mathbb{N} \setminus {1}$. Examples, $2\times 3$ is 2-multiple. $2\times 2\times 3$ is 3-multiple and $3\times 5\times 7$ is 3-multiple.
+\subsection*{Odd Multiple}
+We only use nature numbers as the factors, in this case, $1$ and $2$ are removed.
+
+\section{Axioms}
+For convenience, we don't explicitly clarify $n$ is even and it is large enough in all occurrences.
+\bigskip
+
+\noindent \textbf{Axiom (Prime number):} \\
+Prime numbers are the holes in odd numbers such that odd multiples fail to fill in. It can also be understood as nature numbers subtract even numbers and odd multiples.
+\bigskip
+
+\noindent \textbf{Axiom (Neighor Numbers are Co-prime):} \\
+Or 邻数因子互斥 in Chinese. Given any number $n$, $n$ and $n+1$ are co-prime. If we put $n$ in unique factorial format eg
+$p_1^{e_1} \cdot p_2^{e_2} \cdots p_l^{e_l}$, it will be more obvious $p_1^{e_1} \cdot p_2^{e_2} \cdots p_l^{e_l} + 1$ does not share any factor with $n$. Further $n-1$ does not share any factor with $n$.
+\bigskip
+
+\noindent \textbf{Axiom (Neighboring Zone Factorization Analysis):} \\
+For number sequence $n$, $n-1$,$\cdots $, $n-i$, $\cdots $, $n-m$, $m < n$. We call $i$ the $\delta $. In this zone, a number only shares factors that are factors of current $\delta $ and previous $\delta$s' with larger numbers.
+\bigskip
+
+When $\delta $ is prime and $n$ is subtracting this prime, we need fill in an odd-multiple, other wise we hit a prime and satisfy the conjecture. That creates two situations. 
+\bigskip
+
+First, $n$ and $\delta$ is not co-prime or $\delta$ is a factor of $n$. The upper bound of this happening is $\mathcal{O}(n)$. Compared to the total number of primes smaller than $n$, we can ignore this situation and continue.
+\bigskip
+
+Second, $n$ and $\delta$ is co-prime. To create the odd-multiple, we can not use the factors from previous $\delta $s. Thus $n - \delta $ has to use a new prime, not in the factors set of $\delta$s, not in the factorization of any larger numbers in this zone.
+\bigskip
+
+\newpage
+\section{Application in Goldbach Conjecture}
+Let's try with $85292$ to show how to calculate the Goldbach prime pair $79$ and $85213$, partly manual with computer program aid. I also use Chatgpt aiding Latex writing. Pay attention to steps at $m=3,5,7,11,13,17,19,23,29,31,37,41,47,53,67,71,73,79$.
+
+\begin{proof}[Proof of Goldbach Conjecture]
+%% NEED reexam this segment
+%%
+In zone $[n-m,n]$, as $\delta$ is growing, the factorization in this zone will get all the primes smaller or equal to $m$ sequentially. Then gradually $m$ passes $\sqrt n$. We know between $n - \sqrt n$ and $\sqrt n$, there is a big gap of numbers. If situation one discussed in last section happens, we ignore it and continue. But it is certain situation two will follow, a new prime never used is forced in. The primes less equal to $\sqrt n$ has run out. We can only fill in one but ONLY ONE prime that is bigger than $\sqrt n$. $n$ minus a prime is hitting a prime.
+\end{proof}
+
+
+\renewcommand{\arraystretch}{1.2}
+\begin{longtable}{|>{\centering\arraybackslash}p{2.5cm}|>{\arraybackslash}p{6.5cm}|>{\centering\arraybackslash}p{1.5cm}|}
+\caption{n=85292}
+\label{tab:85292} 
+\hline
+\textbf{$n - m$} & \textbf{Factorization of $n - m$} & \textbf{$-m$} \\
+\hline
+\endfirsthead
+\hline
+\textbf{$n - m$} & \textbf{Factorization of $n - m$} & \textbf{$-m$} \\
+\hline
+\endhead
+85212 & 2×2×3×3×3×3×263 & -80 \\
+85213 & 85213 & -79 \\
+85214 & 2×137×311 & -78 \\
+85215 & 3×5×13×19×23 & -77 \\
+85216 & 2×2×2×2×2×2663 & -76 \\
+85217 & 11×61×127 & -75 \\
+85218 & 2×3×7×2029 & -74 \\
+85219 & 31×2749 & -73 \\
+85220 & 2×2×5×4261 & -72 \\
+85221 & 3×3×17×557 & -71 \\
+85222 & 2×42611 & -70 \\
+85223 & 85223 & -69 \\
+85224 & 2×2×2×3×53×67 & -68 \\
+85225 & 5×5×7×487 & -67 \\
+85226 & 2×43×991 & -66 \\
+85227 & 3×28409 & -65 \\
+85228 & 2×2×11×13×149 & -64 \\
+85229 & 85229 & -63 \\
+85230 & 2×3×3×5×947 & -62 \\
+85231 & 29×2939 & -61 \\
+85232 & 2×2×2×2×7×761 & -60 \\
+85233 & 3×28411 & -59 \\
+85234 & 2×19×2243 & -58 \\
+85235 & 5×17047 & -57 \\
+85236 & 2×2×3×7103 & -56 \\
+85237 & 85237 & -55 \\
+85238 & 2×17×23×109 & -54 \\
+85239 & 3×3×3×7×11×41 & -53 \\
+85240 & 2×2×2×5×2131 & -52 \\
+85241 & 13×79×83 & -51 \\
+85242 & 2×3×14207 & -50 \\
+85243 & 85243 & -49 \\
+85244 & 2×2×101×211 & -48 \\
+85245 & 3×5×5683 & -47 \\
+85246 & 2×7×6089 & -46 \\
+85247 & 85247 & -45 \\
+85248 & 2×2×2×2×2×2×2×2×3×3×37 & -44 \\
+85249 & 163×523 & -43 \\
+85250 & 2×5×5×5×11×31 & -42 \\
+85251 & 3×157×181 & -41 \\
+85252 & 2×2×21313 & -40 \\
+85253 & 7×19×641 & -39 \\
+85254 & 2×3×13×1093 & -38 \\
+85255 & 5×17×17×59 & -37 \\
+85256 & 2×2×2×10657 & -36 \\
+85257 & 3×3×9473 & -35 \\
+85258 & 2×47×907 & -34 \\
+85259 & 85259 & -33 \\
+85260 & 2×2×3×5×7×7×29 & -32 \\
+85261 & 11×23×337 & -31 \\
+85262 & 2×89×479 & -30 \\
+85263 & 3×97×293 & -29 \\
+85264 & 2×2×2×2×73×73 & -28 \\
+85265 & 5×17053 & -27 \\
+85266 & 2×3×3×3×1579 & -26 \\
+85267 & 7×13×937 & -25 \\
+85268 & 2×2×21317 & -24 \\
+85269 & 3×43×661 & -23 \\
+85270 & 2×5×8527 & -22 \\
+85271 & 71×1201 & -21 \\
+85272 & 2×2×2×3×11×17×19 & -20 \\
+85273 & 269×317 & -19 \\
+85274 & 2×7×6091 & -18 \\
+85275 & 3×3×5×5×379 & -17 \\
+85276 & 2×2×21319 & -16 \\
+85277 & 53×1609 & -15 \\
+85278 & 2×3×61×233 & -14 \\
+85279 & 107×797 & -13 \\
+85280 & 2×2×2×2×2×5×13×41 & -12 \\
+85281 & 3×7×31×131 & -11 \\
+85282 & 2×42641 & -10 \\
+85283 & 11×7753 & -9 \\
+85284 & 2×2×3×3×23×103 & -8 \\
+85285 & 5×37×461 & -7 \\
+85286 & 2×42643 & -6 \\
+85287 & 3×28429 & -5 \\
+85288 & 2×2×2×7×1523 & -4 \\
+85289 & 17×29×173 & -3 \\
+85290 & 2×3×5×2843 & -2 \\
+85291 & 19×67×67 & -1 \\
+85292 & 2×2×21323 & 0 \\
+\hline
+\end{longtable}
+\bigskip
+
+
+
+\section{Final Words}
+
+%% quote is wrong
+It is still a little bit surreal for me to get here. I have sufficient background in computer science and mathematics in understanding what I am doing. But Number Theory is not my specialty and particularly I aimed too high for this conjecture. I hope the readers please do not be afraid to criticize any mistakes. I hope if the conjecture is not rigidly proved here, at least my article may provide any meaningful clues for further research. Though this is not my first academic writing, still these `final words' may serve an `excuse me' if there is any grieve mistake. Solute all the people dedicate to research in computer science and mathematics!
+\end{document}
+
