@@ -1,0 +1,70 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+
+\geometry{a4paper, margin=1in}
+\title{Understanding and Attempting Proof of Goldbach Conjecture}
+\author{Zhikai Wang \\ \texttt{zhikai.wang@alumni.ucla.edu}}
+\date{June 2025}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This article explores a conceptual approach toward proving the Goldbach Conjecture, one of the oldest unsolved problems in number theory. Although a complete proof remains elusive, we attempt to understand the structure of the problem using factorization patterns, prime gaps, and heuristic reasoning. This work may serve to inspire further exploration or critical examination of the conjecture from a new perspective.
+\end{abstract}
+
+\section{Introduction}
+In this article, we attempt to provide insights into the well-known Goldbach Conjecture. Most computer science and mathematics graduates will have sufficient background to follow the content. We intentionally omit edge cases to focus on core reasoning patterns. We do not attempt to prove facts considered obvious in elementary number theory. In our proof, we try to put odd multiples into odd numbers. If it fails, a new prime is needed as exlained below.
+
+\section{Definitions}
+\textbf{N-multiple:} An integer composed of \( n \) repeatable prime integer factors, where \( n \in \mathbb{N} \setminus \{1\} \).\\
+Examples: \( 2 \times 3 \) is a 2-multiple; \( 2 \times 2 \times 3 \) is a 3-multiple; \( 3 \times 5 \times 7 \) is also a 3-multiple.\\
+
+\noindent \textbf{Odd Multiple:} A product of odd primes. We exclude 1 and 2.
+
+\section{Axioms}
+\subsection*{Axiom 1: Prime Number as Gaps}
+Prime numbers are the “gaps” in the distribution of odd numbers where odd multiples fail to fill in. Equivalently, primes can be viewed as natural numbers that are neither even nor odd multiples.
+
+\subsection*{Axiom 2: Neighbor Numbers are Co-prime}
+For any integer \( n \), the numbers \( n - 1 \) and \( n + 1 \) are co-prime with \( n \). This follows from the fundamental theorem of arithmetic.
+
+\subsection*{Axiom 3: Neighboring Zone Factorization Analysis}
+Consider a zone defined by the decreasing sequence \( n, n - 1, \dots, n - m \). For an offset \( \delta = m \), we examine how factorization properties evolve. In this zone, a number only shares factors that are factors of current $\delta $ and previous $\delta$s' with larger numbers.
+\bigskip
+
+When $\delta $ is prime and $n$ is subtracting this prime, we need fill in an odd-multiple, other wise we hit a prime and satisfy the conjecture. That creates two situations. 
+\bigskip
+
+First, $n$ and $\delta$ is not co-prime or $\delta$ is a factor of $n$. The upper bound of this happening is $\mathcal{O}(log n)$. Compared to the total number of primes smaller than $n$, we can ignore this situation and continue.
+\bigskip
+
+Second, $n$ and $\delta$ is co-prime. To create the odd-multiple, we can not use the factors from previous $\delta $s. Thus $n - \delta $ has to use a new prime, not in the factors set of $\delta$s, not in the factorization of any larger numbers in this zone.
+\bigskip
+
+\section{Proof Goldbach Conjecture}
+The intuition is acuired through find the Goldbach prime pair eg \( 85292  = 79 + 85213 \). We skip trivial details here. Upon request, we can provide code and samples that are on Github.
+\begin{proof}[Proof of Goldbach Conjecture]
+In zone $[n-m,n]$, as $\delta$ is growing, the factorization in this zone will get all the primes smaller or equal to $m$ sequentially. Then gradually $m$ passes $\sqrt n$. We know between $n - \sqrt n$ and $\sqrt n$, there is a vast spanse of numbers including primes. If situation one discussed in last section happens, we ignore it and continue. But it is certain situation two will follow, a new prime never used is forced in. The primes less equal to $\sqrt n$ have run out. We can only fill in one but ONLY ONE prime that is bigger than $\sqrt n$. $n$ minus a prime is hitting a prime.
+\end{proof}
+
+
+\section{Final Words}
+The proof is presented at the strongest reasoning I can do. It is my sincere hope that the approach offers a meaningful clue or inspires scrutiny. I welcome constructive criticism, especially from those more experienced in number theory. I salute all those dedicated to advancing mathematical understanding.
+
+\end{document}
+
